@@ -14,7 +14,7 @@
  * @description Model / Entity class.
  *
  */
-namespace BiberLtd\Core\Bundles\PollManagementBundle\Entity;
+namespace BiberLtd\Bundle\PollManagementBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 use BiberLtd\Core\CoreLocalizableEntity;
 /**
@@ -46,7 +46,7 @@ class PollChoice extends CoreLocalizableEntity
 
     /** 
      * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\PollChoiceLocalization",
+     *     targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\PollChoiceLocalization",
      *     mappedBy="poll_choice"
      * )
      */
@@ -54,14 +54,14 @@ class PollChoice extends CoreLocalizableEntity
 
     /** 
      * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\VotesOfPoll",
+     *     targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\VotesOfPoll",
      *     mappedBy="poll_choice"
      * )
      */
     private $votes;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\Poll", inversedBy="choices")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\Poll", inversedBy="choices")
      * @ORM\JoinColumn(name="poll", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $poll;

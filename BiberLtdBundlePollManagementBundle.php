@@ -1,11 +1,11 @@
 <?php
 
-namespace BiberLtd\Core\Bundles\PollManagementBundle;
+namespace BiberLtd\Bundle\PollManagementBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class BiberLtdCoreBundlesPollManagementBundle extends Bundle
+class BiberLtdBundlePollManagementBundle extends Bundle
 {
 
 }

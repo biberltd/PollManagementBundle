@@ -1,4 +1,4 @@
 services:
     core_file_management_bundle.model:
-        class:        BiberLtd\Core\Bundles\FileManagementBundle\Services\FileManagementModel
+        class:        BiberLtd\Bundle\FileManagementBundle\Services\FileManagementModel
         arguments:    [@kernel, "default", "doctrine"]
