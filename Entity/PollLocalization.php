@@ -1,7 +1,7 @@
 <?php
 /**
  * @name        PollChoiceLocalization
- * @package		BiberLtd\Core\PollManagementBundle
+ * @package		BiberLtd\Bundle\CoreBundle\PollManagementBundle
  *
  * @author		Murat Ünal
  *
@@ -14,9 +14,9 @@
  * @description Model / Entity class.
  *
  */
-namespace BiberLtd\Core\Bundles\PollManagementBundle\Entity;
+namespace BiberLtd\Bundle\PollManagementBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
-use BiberLtd\Core\CoreEntity;
+use BiberLtd\Bundle\CoreBundle\CoreEntity;
 /** 
  * @ORM\Entity
  * @ORM\Table(
@@ -45,7 +45,7 @@ class PollLocalization extends CoreEntity
 
     /** 
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\MultiLanguageSupportBundle\Entity\Language")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MultiLanguageSupportBundle\Entity\Language")
      * @ORM\JoinColumn(name="language", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $language;
@@ -53,7 +53,7 @@ class PollLocalization extends CoreEntity
     /** 
      * @ORM\Id
      * @ORM\ManyToOne(
-     *     targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\Poll",
+     *     targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\Poll",
      *     inversedBy="localizations"
      * )
      * @ORM\JoinColumn(name="poll", referencedColumnName="id", nullable=false, onDelete="CASCADE")

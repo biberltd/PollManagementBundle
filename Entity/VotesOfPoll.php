@@ -1,7 +1,7 @@
 <?php
 /**
  * @name        VotesOfPoll
- * @package		BiberLtd\Core\PollManagementBundle
+ * @package		BiberLtd\Bundle\CoreBundle\PollManagementBundle
  *
  * @author		Murat Ünal
  *
@@ -14,9 +14,9 @@
  * @description Model / Entity class.
  *
  */
-namespace BiberLtd\Core\Bundles\PollManagementBundle\Entity;
+namespace BiberLtd\Bundle\PollManagementBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
-use BiberLtd\Core\CoreEntity;
+use BiberLtd\Bundle\CoreBundle\CoreEntity;
 /** 
  * @ORM\Entity
  * @ORM\Table(
@@ -48,19 +48,19 @@ class VotesOfPoll extends CoreEntity
     private $date_voted;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\Poll", inversedBy="votes")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\Poll", inversedBy="votes")
      * @ORM\JoinColumn(name="poll", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $poll;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\PollChoice", inversedBy="votes")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\PollChoice", inversedBy="votes")
      * @ORM\JoinColumn(name="choice", referencedColumnName="id", nullable=false, onDelete="RESTRICT")
      */
     private $poll_choice;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\MemberManagementBundle\Entity\Member")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\MemberManagementBundle\Entity\Member")
      * @ORM\JoinColumn(name="member", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $member;

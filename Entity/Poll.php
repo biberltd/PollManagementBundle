@@ -1,7 +1,7 @@
 <?php
 /**
  * @name        Poll
- * @package		BiberLtd\Core\PollManagementBundle
+ * @package		BiberLtd\Bundle\CoreBundle\PollManagementBundle
  *
  * @author		Murat Ünal
  *
@@ -14,9 +14,9 @@
  * @description Model / Entity class.
  *
  */
-namespace BiberLtd\Core\Bundles\PollManagementBundle\Entity;
+namespace BiberLtd\Bundle\PollManagementBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
-use BiberLtd\Core\CoreLocalizableEntity;
+use BiberLtd\Bundle\CoreBundle\CoreLocalizableEntity;
 /** 
  * @ORM\Entity
  * @ORM\Table(
@@ -81,24 +81,24 @@ class Poll extends CoreLocalizableEntity
 
     /** 
      * @ORM\OneToMany(
-     *     targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\PollLocalization",
+     *     targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\PollLocalization",
      *     mappedBy="poll"
      * )
      */
     protected $localizations;
 
     /** 
-     * @ORM\OneToMany(targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\PollChoice", mappedBy="poll")
+     * @ORM\OneToMany(targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\PollChoice", mappedBy="poll")
      */
     private $choices;
 
     /** 
-     * @ORM\OneToMany(targetEntity="BiberLtd\Core\Bundles\PollManagementBundle\Entity\VotesOfPoll", mappedBy="poll")
+     * @ORM\OneToMany(targetEntity="BiberLtd\Bundle\PollManagementBundle\Entity\VotesOfPoll", mappedBy="poll")
      */
     private $votes;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="BiberLtd\Core\Bundles\SiteManagementBundle\Entity\Site")
+     * @ORM\ManyToOne(targetEntity="BiberLtd\Bundle\SiteManagementBundle\Entity\Site")
      * @ORM\JoinColumn(name="site", referencedColumnName="id", onDelete="CASCADE")
      */
     private $site;
