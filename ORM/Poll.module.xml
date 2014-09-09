@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<skipper version="3.0.0.1104" mvc="Symfony2" orm="Doctrine2">
+  <module name="PollManagementBundle" import-format="Doctrine2Php" import-path="../Entity" uuid="f58352d6-2ca5-4430-8000-ab6e416e0ab9">
+    <entity name="Poll" description="Stores all poll/survey definitions." uuid="ac4eb752-6f2d-4b91-936f-2570aa6c7738">
+      <field name="id" description="System given id." type="integer" size="10" required="true" unique="true" primary="true" auto-increment="true" uuid="ed6369a9-3af3-40e8-978d-69bbf34b476f"/>
+      <field name="date_added" description="Date when the poll is added." type="datetime" required="true" uuid="815cc251-cefb-4998-bd3d-f09aa5ecd074"/>
+      <field name="date_published" description="Date when the poll is published." type="datetime" required="true" uuid="a9d0ebb5-2452-49af-a17a-beed49bfb5d3"/>
+      <field name="date_unpublished" description="Date when the poll will be unpublished." type="datetime" uuid="4547f0c8-af7e-41ac-b206-2d1424155ea8"/>
+      <field name="count_voters" description="Number of people who have voted." type="integer" size="10" default="0" required="true" uuid="e806d6fe-c2ea-4e7a-9f8f-503029d80ad2"/>
+      <field name="count_votes" description="Number of votes casted." type="integer" size="10" default="0" required="true" uuid="3cd72fbc-1794-429a-b725-05244e81ebc6"/>
+      <field name="count_view" description="Number of times this poll has been viewed." type="integer" size="10" default="0" required="true" uuid="c0660c07-f0bd-4810-b835-0a9773bb061f"/>
+      <field name="select_mode" description="m:multi;s:single" type="string" size="1" default="s" required="true" uuid="4cfce6cb-0747-427c-a6df-6cd7ac1cb61c"/>
+      <field name="max_votes" description="Number of max votes to be accepted. 0 means unlimited." type="integer" size="10" default="0" required="true" uuid="946f68be-9af9-4bf5-9060-5f75fc4c6782"/>
+      <field name="site" description="Site that poll belongs to." type="integer" size="10" uuid="b0c9f96e-5007-403d-847e-4762cde91583"/>
+      <index name="idx_u_poll_id" unique="true">
+        <index-field name="id"/>
+      </index>
+      <index name="idx_n_poll_date_added">
+        <index-field name="id"/>
+      </index>
+      <index name="idx_n_poll_date_published">
+        <index-field name="date_published"/>
+      </index>
+      <index name="idx_n_poll_date_unpublished">
+        <index-field name="date_unpublished"/>
+      </index>
+      <orm-attributes>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+        <attribute name="table">poll</attribute>
+        <attribute name="export-file-name">Poll.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="Poll" to="Site" caption="idx_f_poll_site" inverse-alias="site" uuid="b8d0ddf6-f2a9-4896-9697-8a951145ad05">
+      <association-field from="site" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="PollLocalization" description="Stores localized values of polls." uuid="dca0cedf-b972-446a-bd96-eea5f0cd7aab">
+      <field name="poll" description="Localized poll." type="integer" size="10" required="true" primary="true" uuid="f18bef6f-0890-401e-8ec5-0640806ed0c4"/>
+      <field name="language" description="Localization language." type="integer" size="5" required="true" primary="true" uuid="ed5b2d8c-dc68-45e1-978a-0b1cffb88dca"/>
+      <field name="question" description="Localized poll question." type="string" size="160" required="true" uuid="334bf9b9-b6ac-4d1f-93b0-ae3e231f801a"/>
+      <field name="url_key" description="Localized poll url key." type="string" size="255" required="true" uuid="d8403230-18aa-423f-a426-c6130902d831"/>
+      <field name="description" description="Localized description of poll." type="text" uuid="b4816e15-4f27-4415-9c3f-078f0ac06560"/>
+      <index name="idx_u_poll_localization" unique="true">
+        <index-field name="poll"/>
+        <index-field name="language"/>
+      </index>
+      <index name="idx_u_poll_localization_url_key">
+        <index-field name="language"/>
+        <index-field name="url_key"/>
+      </index>
+      <orm-attributes>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+        <attribute name="table">poll_localization</attribute>
+        <attribute name="export-file-name">PollLocalization.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="PollLocalization" to="Language" caption="idx_f_poll_localization_language" inverse-alias="language" uuid="a766a71c-1c89-4bf2-883d-b6a63a91018d">
+      <association-field from="language" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="PollLocalization" to="Poll" caption="idx_f_poll_localization_poll" owner-alias="localizations" inverse-alias="poll" uuid="41fa7dbb-6449-4ac5-aaf6-788df2496f8d">
+      <association-field from="poll" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="PollChoice" description="Stores a list of poll choice definitions." uuid="6c4d8107-7130-4c16-b4d3-b9869aa04b56">
+      <field name="id" description="System given id." type="integer" size="10" required="true" unique="true" primary="true" auto-increment="true" uuid="f0735929-3fe1-4d7d-b9aa-29cd15af8fc1"/>
+      <field name="count_vote" description="Number of votes casted to this choice." type="integer" size="10" default="0" required="true" uuid="bb8a9117-3e9a-40c3-bef9-0aaaa938a75f"/>
+      <field name="ratio_vote" description="The ratio of vote count to total votes." type="decimal" size="4" default="0" required="true" uuid="09dad502-003f-48f0-b550-fcb78f3253d7"/>
+      <field name="poll" description="The poll that choice belongs to." type="integer" size="10" required="true" uuid="e6ec7d09-6aeb-44ee-bf57-a479a34dc547"/>
+      <index name="idx_u_poll_choice_id" unique="true">
+        <index-field name="id"/>
+      </index>
+      <orm-attributes>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+        <attribute name="table">poll_choice</attribute>
+        <attribute name="export-file-name">PollChoice.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="PollChoice" to="Poll" caption="idx_f_poll_choice_poll" owner-alias="choices" inverse-alias="poll" uuid="47fa03f3-1933-4297-b33e-1af120e9e139">
+      <association-field from="poll" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="PollChoiceLocalization" description="Stores localized values of poll choices." uuid="12bce468-bf58-4171-881f-56e34c948569">
+      <field name="choice" description="Localized poll choice." type="integer" size="10" required="true" primary="true" uuid="295ac5be-cb2a-4ecf-b585-a6bd43977ab5"/>
+      <field name="language" description="Localization language." type="integer" size="5" required="true" primary="true" uuid="8e718495-9c33-46f8-ac48-f858c3363a3e"/>
+      <field name="title" description="Poll answer / choice." type="string" size="155" required="true" uuid="1cce2002-eb63-43e6-94b3-4cd68cb1ac48"/>
+      <field name="url_key" description="Poll choice url key." type="string" size="255" required="true" uuid="00595a6c-3b3b-4f95-9c7b-e31979741f49"/>
+      <index name="idx_u_poll_choice_localization" unique="true">
+        <index-field name="choice"/>
+        <index-field name="language"/>
+      </index>
+      <index name="idx_u_poll_choice_url_key" unique="true">
+        <index-field name="language"/>
+        <index-field name="url_key"/>
+      </index>
+      <orm-attributes>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+        <attribute name="table">poll_choice_localization</attribute>
+        <attribute name="export-file-name">PollChoiceLocalization.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="PollChoiceLocalization" to="PollChoice" caption="idx_f_poll_choice_localization_choice" owner-alias="localizations" inverse-alias="poll_choice" uuid="cde85cfa-b2a2-4990-aced-4db1d39f1d6b">
+      <association-field from="choice" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="PollChoiceLocalization" to="Language" caption="idx_f_poll_choice_localization_language" inverse-alias="language" uuid="fae590ac-73e8-4442-82d3-8cb12e8c2c88">
+      <association-field from="language" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <entity name="VotesOfPoll" description="Keeps track of votes for each poll and poll choice." uuid="2308ce13-6dc2-4591-bd7e-14b8d26a5817">
+      <field name="id" description="System given id." type="integer" size="20" required="true" unique="true" primary="true" auto-increment="true" uuid="05704e88-366c-421d-9682-205c969f96d5"/>
+      <field name="poll" description="Poll that vote is casted." type="integer" size="10" required="true" uuid="59d07e52-278e-42e8-a88c-6d9deaf89068"/>
+      <field name="choice" description="Choice selected." type="integer" size="10" required="true" uuid="8a18e1ec-2b54-46aa-833e-bb07172c9fd9"/>
+      <field name="voter" description="Member who have voted." type="integer" size="20" required="true" uuid="82df1c25-6b16-4a5a-935d-29cd64e099ef"/>
+      <field name="date_voted" description="Date when vote is casted." type="datetime" required="true" uuid="e87a4fcb-c0c9-45eb-8014-a848bae9e201"/>
+      <field name="member" type="integer" size="10" required="true" uuid="942d3ff3-0f85-4949-8860-7252ae27a142"/>
+      <index name="idx_u_votes_of_poll_id" unique="true">
+        <index-field name="id"/>
+      </index>
+      <index name="idx_u_votes_of_poll" unique="true">
+        <index-field name="poll"/>
+        <index-field name="choice"/>
+        <index-field name="voter"/>
+      </index>
+      <orm-attributes>
+        <attribute name="options">
+          <attribute name="charset">utf8</attribute>
+          <attribute name="collate">utf8_turkish_ci</attribute>
+          <attribute name="engine">innodb</attribute>
+        </attribute>
+        <attribute name="table">votes_of_poll</attribute>
+        <attribute name="export-file-name">VotesOfPoll.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="VotesOfPoll" to="Poll" caption="idx_f_votes_of_poll_poll" owner-alias="votes" inverse-alias="poll" uuid="2d740a46-45f2-4b77-9de1-787d5109fa9b">
+      <association-field from="poll" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <association from="VotesOfPoll" to="PollChoice" caption="idx_f_votes_of_poll_choice" owner-alias="votes" inverse-alias="poll_choice" uuid="e7b81bc3-23a0-4015-851e-05b1fd6e956a">
+      <association-field from="choice" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">RESTRICT</attribute>
+      </orm-attributes>
+    </association>
+    <association from="VotesOfPoll" to="Member" caption="idx_f_votes_of_poll_member" inverse-alias="member" uuid="dc88de98-14c1-4830-bd51-b31db709fe21">
+      <association-field from="member" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+      </orm-attributes>
+    </association>
+    <comment caption="PollManagementBundle Pricing" description="poll: 245 TL&#10;poll_localization: 150 TL&#10;poll_choice: 105 TL&#10;poll_choice_localization: 130 TL&#10;votes_of_poll: 195 TL&#10;&#10;toplam: 825 TL" uuid="14f20eb7-99d6-4579-894d-81a2f91a2215"/>
+    <orm-attributes>
+      <attribute name="namespace">BiberLtd\Core\Bundles\PollManagementBundle\Entity</attribute>
+      <attribute name="filename-format">entity-name-only</attribute>
+      <attribute name="file-suffix">without-suffix</attribute>
+    </orm-attributes>
+  </module>
+  <visual-data>
+    <entity uuid="12bce468-bf58-4171-881f-56e34c948569" bg-color="4294967295" hdr-color="4292006610" position-x="750" position-y="250" size-x="0" size-x2="119" size-y="0" size-y2="73"/>
+    <comment uuid="14f20eb7-99d6-4579-894d-81a2f91a2215" bg-color="4294948765" position-x="1" position-y="18" size-x="0" size-x2="151" size-y="0" size-y2="104" txt-color="4278190080"/>
+    <entity uuid="2308ce13-6dc2-4591-bd7e-14b8d26a5817" bg-color="4294967295" hdr-color="4292006610" position-x="350" position-y="250" size-x="0" size-x2="117" size-y="0" size-y2="101"/>
+    <entity uuid="6c4d8107-7130-4c16-b4d3-b9869aa04b56" bg-color="4294967295" hdr-color="4292006610" position-x="500" position-y="50" size-x="0" size-x2="125" size-y="0" size-y2="73"/>
+    <entity uuid="ac4eb752-6f2d-4b91-936f-2570aa6c7738" bg-color="4294967295" hdr-color="4292006610" position-x="200" position-y="50" size-x="0" size-x2="142" size-y="0" size-y2="157"/>
+    <entity uuid="dca0cedf-b972-446a-bd96-eea5f0cd7aab" bg-color="4294967295" hdr-color="4292006610" position-x="50" position-y="200" size-x="0" size-x2="113" size-y="0" size-y2="87"/>
+    <module uuid="f58352d6-2ca5-4430-8000-ab6e416e0ab9" bg-color="4292728527" size-x="0" size-x2="900" size-y="0" size-y2="367"/>
+  </visual-data>
+</skipper>
