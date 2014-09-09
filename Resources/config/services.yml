@@ -1,7 +1,4 @@
-parameters:
-#    biber_ltd_poll_management.example.class: BiberLtd\Bundle\PollManagementBundle\Example
-
 services:
-#    biber_ltd_poll_management.example:
-#        class: %biber_ltd_poll_management.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    core_file_management_bundle.model:
+        class:        BiberLtd\Bundle\FileManagementBundle\Services\FileManagementModel
+        arguments:    [@kernel, "default", "doctrine"]
